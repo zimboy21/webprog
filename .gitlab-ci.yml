@@ -3,6 +3,6 @@ stages:
 
 check:
   stage: check
-  image: registry.gitlab.com/ubb-webprog/gitlabutils
+  image: bbteinfo/webprog-gitlabutils
   script:
     - checkrepo
