@@ -1,0 +1,8 @@
+stages:
+  - check
+
+check:
+  stage: check
+  image: registry.gitlab.com/ubb-webprog/gitlabutils
+  script:
+    - checkrepo
