@@ -9,3 +9,7 @@ bower_components/
 **/jquery.*.js
 **/tether.js
 **/tether.*.js
+
+# conf files
+protractor.conf.js
+karma.conf.js
