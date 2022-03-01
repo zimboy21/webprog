@@ -1,0 +1,129 @@
+.click-zoom input[type=checkbox]:checked~img {
+    transform: scale(2);
+    cursor: zoom-out
+}
+
+body {
+    background-image: url("pics/background.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+}
+
+.middle {
+    margin: auto;    
+    text-align: center;
+}
+
+h1, h2 {
+    font-size: x-large;
+    color: #FF6600;
+    background-color: aqua;
+    font-family: 'Verdana', Times, serif;
+}
+
+ul.features {
+    list-style-type: circle;
+}
+
+ul.bestSellers {
+    list-style-type: square;
+}   
+
+.buzz {
+    color: red;
+    font-size: large;
+}
+
+nav div {
+    background-color: #fc9b5a;
+    border-radius: 10px;
+    font-size: xx-large;
+}
+
+a.link1:active {
+    color: white;
+    font-style: italic;
+}
+a.link1:visited {
+    color: red;
+    font-style: oblique;
+}
+a.link1:hover {
+    color: #fc9b5a;
+    font-style: normal;
+}
+
+a.link2:active {
+    color: #fc9b5a;
+    font-style: normal;
+}
+a.link2:visited {
+    color: white(11, 63, 18);
+    font-style: oblique;
+}
+a.link2:hover {
+    color: red;
+    font-style: italic;
+}
+
+div.dashedFrame {
+    border-left: green dashed;
+    border-top: red dashed;
+    border-right: yellow dashed;
+    border-bottom: blue dashed;
+    text-align: left;
+    padding-right: 50%;
+}
+
+tr:nth-child(even) td:nth-child(even), tr:nth-child(odd) td:nth-child(odd) {
+    background: #fc9b5a;
+}
+
+tr:nth-child(odd) td:nth-child(even), tr:nth-child(even) td:nth-child(odd) {
+    background: white;
+}
+
+div.podium {
+    padding-top: 15px;
+    display: flex;
+    align-items: flex-end;
+}
+
+div.I {
+    display: inline-block;
+    width: 100px;
+    height: 85px;
+    background-color: gold;
+    text-align: center;
+}
+
+div.II {
+    display: inline-block;
+    width: 100px;
+    height: 70px;
+    background-color: silver;
+    text-align: center;
+}
+
+div.III {
+    display: inline-block;
+    width: 100px;
+    height: 55px;
+    background-color: brown;
+    text-align: center;
+}
+
+div.I:hover {
+    transform: scale(2);
+    transition: 2s;
+}
+
+div.II:hover {
+    transform: scale(2);
+    transition: 2s;
+}
+
+div.III:hover {
+    transform: scale(2);
+    transition: 2s;
+}
