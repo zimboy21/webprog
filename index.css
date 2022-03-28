@@ -113,17 +113,7 @@ div.III {
     text-align: center;
 }
 
-div.I:hover {
+div.I:hover , div.II:hover, div.III:hover {
     transform: scale(2);
-    transition: 2s;
-}
-
-div.II:hover {
-    transform: scale(2);
-    transition: 2s;
-}
-
-div.III:hover {
-    transform: scale(2);
-    transition: 2s;
+    transition-duration: 2s;
 }
