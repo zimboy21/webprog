@@ -3,15 +3,18 @@ window.onload = () => {
     document.getElementById('urlErrorMessage').style.display = "none";
     document.getElementById('quizCanvas').style.display = "none";
     document.getElementById('resultButton').style.display = "none";
-    //document.forms.mathQuizForm.addEventListener("change", validateForm);
+    document.forms.mathQuizForm.addEventListener("change", validateForm);
 }
 
 let blockX;
 let blockY;
 let clicks = 1;
-let questions = [];
-let results = [];
+let questionsAlreadySelected = [];
+let resultsAlreadySelected = [];
 let binds = 0;
+let quizQuestions = [];
+let shuffeledResults = [];
+let selectedResults = [];
 
 function validateMail(mail) {
     if (/[A-Za-z0-9\._-]+@(gmail|yahoo)+\.com/.test(mail)) {
@@ -50,9 +53,20 @@ function lastModified() {
     document.getElementById('lastModified').innerText = `Last modified: ${document.lastModified}`;
 }
 
+function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+    while (currentIndex != 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
 function startQuiz() {
     generateQuestions();
-    console.log(generatedQestions);
     document.getElementById('quizCanvas').style.display = "inline-block";
     let canvas = document.getElementById('quizCanvas');
     let quizCanvas2d = document.getElementById('quizCanvas').getContext('2d');
@@ -63,20 +77,22 @@ function startQuiz() {
     let blockSize = canvas.height / questionCount
 
     for (let i = 0; i < questionCount; i++) {
+        shuffeledResults[i] = quizQuestions[i][0];
+    }
+    shuffeledResults = shuffle(shuffeledResults);
+    for (let i = 0; i < questionCount; i++) {
         quizCanvas2d.fillRect(0, (i + 1) * blockSize, 200, 2);
         quizCanvas2d.font = '1em Arial';
-        quizCanvas2d.fillText(generatedQestions[i][1], 70, i * blockSize + blockSize / 2 + 10);
+        quizCanvas2d.fillText(quizQuestions[i][1], 70, i * blockSize + blockSize / 2 + 10);
         quizCanvas2d.fillRect(800, (i + 1) * blockSize, 200, 2);
-        quizCanvas2d.fillText(String(generatedQestions[i][0]), 890, i * blockSize + blockSize / 2 + 10);
+        quizCanvas2d.fillText(String(shuffeledResults[i]), 890, i * blockSize + blockSize / 2 + 10);
     }
+
 }
 
 function RNG(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
 }
-
-let generatedQestions = [];
-let onlyGeneratedResults = [];
 
 function generateQuestions() {
     let operator = document.getElementById('aritmOperation').value;
@@ -87,7 +103,7 @@ function generateQuestions() {
             let a = RNG(1, 50);
             let b = RNG(1, 50);
             let c = a + b;
-            generatedQestions[i] = [c, `${a} + ${b}`];
+            quizQuestions[i] = [c, `${a} + ${b}`];
         }
     }
     if (operator === 'substraction') {
@@ -95,7 +111,7 @@ function generateQuestions() {
             let a = RNG(50, 100);
             let b = RNG(0, 50);
             let c = a - b;
-            generatedQestions[i] = [c, `${a} - ${b}`];
+            quizQuestions[i] = [c, `${a} - ${b}`];
         }
     }
     if (operator === 'multiplication') {
@@ -103,7 +119,7 @@ function generateQuestions() {
             let a = RNG(1, 10);
             let b = RNG(1, 10);
             let c = a * b;
-            generatedQestions[i] = [c, `${a} * ${b}`];
+            quizQuestions[i] = [c, `${a} * ${b}`];
         }
     }
     if (operator === 'division') {
@@ -111,7 +127,7 @@ function generateQuestions() {
             let a = RNG(1, 100);
             let b = RNG(1, 10);
             let c = a / b;
-            generatedQestions[i] = [c, `${a} / ${b}`];
+            quizQuestions[i] = [c, `${a} / ${b}`];
         }
     }
 }
@@ -129,11 +145,11 @@ function makeSelection(event) {
     quizCanvas2d.fillStyle = '#e65c00';
     if (x < 200) {
         blockX = Math.floor(y / blockSize);
-        if (!questions[blockX]) {
+        if (!questionsAlreadySelected[blockX]) {
             quizCanvas2d.beginPath();
             quizCanvas2d.rect(1, blockX * blockSize + 1, 197, blockSize - 3);
             quizCanvas2d.stroke();
-            questions[blockX] = 1;
+            questionsAlreadySelected[blockX] = 1;
             clicks = clicks + 1;
         }
         else {
@@ -143,7 +159,7 @@ function makeSelection(event) {
 
     if (x > 600) {
         blockY = Math.floor(y / blockSize);
-        if (!results[blockY]) {
+        if (!resultsAlreadySelected[blockY]) {
             quizCanvas2d.fillRect(0, blockX * blockSize, 200, blockSize);
             quizCanvas2d.fillRect(800, blockY * blockSize, 200, blockSize);
 
@@ -151,16 +167,15 @@ function makeSelection(event) {
             
             quizCanvas2d.fillRect(0, blockX * blockSize, 200, 2);
             quizCanvas2d.fillRect(800, blockY * blockSize, 200, 2);
-            results[blockY] = 1;
+            resultsAlreadySelected[blockY] = 1;
             clicks = clicks + 1;
         }
     }
 
     quizCanvas2d.fillStyle = 'white';
     quizCanvas2d.font = '1em Arial';
-    quizCanvas2d.fillStyle = 'white';
-    quizCanvas2d.fillText(String(generatedQestions[blockY][0]), 890, blockY * blockSize + blockSize / 2 + 10);
-    quizCanvas2d.fillText(generatedQestions[blockX][1], 70, blockX * blockSize + blockSize / 2 + 10);
+    quizCanvas2d.fillText(quizQuestions[blockX][1], 70, blockX * blockSize + blockSize / 2 + 10);
+    quizCanvas2d.fillText(String(shuffeledResults[blockY]), 890, blockY * blockSize + blockSize / 2 + 10);
 
     quizCanvas2d.beginPath();
     quizCanvas2d.moveTo(200, (blockSize * blockX) + blockSize / 2);
@@ -168,10 +183,50 @@ function makeSelection(event) {
     if (clicks % 2) {
         quizCanvas2d.strokeStyle = 'blue';
         quizCanvas2d.stroke();
+        selectedResults[binds] = [blockX, blockY];
         binds = binds + 1;
         if (String(binds) === questionCount) {
             document.getElementById('resultButton').style.display = "block";
         }
     }
     
+}
+
+function evaluateQuiz() {
+    let questionCount = document.getElementById('questionCount').value;
+    let quizCanvas2d = document.getElementById('quizCanvas').getContext('2d');
+    let canvas = document.getElementById('quizCanvas');
+    let blockSize = canvas.height / questionCount
+
+    for (let i = 0; i < questionCount; i++) {
+        let questionRect = selectedResults[i][0];
+        let resultRect = selectedResults[i][1];
+        if (quizQuestions[questionRect][0] === shuffeledResults[resultRect]) {
+            quizCanvas2d.fillStyle = 'green';
+            quizCanvas2d.fillRect(0, questionRect * blockSize, 200, blockSize);
+            quizCanvas2d.fillRect(800, resultRect * blockSize, 200, blockSize);
+            quizCanvas2d.fillStyle = 'white';
+            quizCanvas2d.font = '1em Arial';
+            quizCanvas2d.fillText(quizQuestions[questionRect][1], 70, questionRect * blockSize + blockSize / 2 + 10);
+            quizCanvas2d.fillText(String(shuffeledResults[resultRect]), 890, resultRect * blockSize + blockSize / 2 + 10);
+            quizCanvas2d.beginPath();
+            quizCanvas2d.moveTo(200, (blockSize * questionRect) + blockSize / 2);
+            quizCanvas2d.lineTo(800, (blockSize * resultRect) + blockSize / 2);
+            quizCanvas2d.strokeStyle = 'green';
+            quizCanvas2d.stroke();
+        } else {
+            quizCanvas2d.fillStyle = 'red';
+            quizCanvas2d.fillRect(0, questionRect * blockSize, 200, blockSize);
+            quizCanvas2d.fillRect(800, resultRect * blockSize, 200, blockSize);
+            quizCanvas2d.fillStyle = 'white';
+            quizCanvas2d.font = '1em Arial';
+            quizCanvas2d.fillText(quizQuestions[questionRect][1], 70, questionRect * blockSize + blockSize / 2 + 10);
+            quizCanvas2d.fillText(String(shuffeledResults[resultRect]), 890, resultRect * blockSize + blockSize / 2 + 10);
+            quizCanvas2d.beginPath();
+            quizCanvas2d.moveTo(200, (blockSize * questionRect) + blockSize / 2);
+            quizCanvas2d.lineTo(800, (blockSize * resultRect) + blockSize / 2);
+            quizCanvas2d.strokeStyle = 'red';
+            quizCanvas2d.stroke();
+        }
+    }
 }
