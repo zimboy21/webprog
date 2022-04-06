@@ -115,14 +115,13 @@
                     website!</p>
                 <label for="aritmOperation">Arithmetic operation:</label><br>
                 <select name="aritmOperation" id="aritmOperation" required>
-                    <option value="">Operators</option>
                     <option value="addition">Addition</option>
                     <option value="substraction">Substraction</option>
                     <option value="multiplication">Multiplication</option>
                     <option value="division">Division</option>
                 </select><br>
                 <label for="questionCount">Number of questions:</label><br>
-                <input type="number" id="questionCount" class="questionCount" min="5" max="10" required>
+                <input type="number" id="questionCount" class="questionCount" min="5" max="10" value="5" required>
             </form>
             <button type="submit" id="submitButton" onclick="startQuiz()" disabled>Submit</button>
         </section>
