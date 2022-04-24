@@ -9,10 +9,10 @@
 </head>
 
 <body>
-    <form action="uploadImage" method="POST">
+    <form action="/form/uploadImage" method="POST" enctype="multipart/form-data">
         <label for="apartmentID">Apartment ID</label><br>
         <input type="text" name="apartmentID" id="apartmentID"><br>
-        <input type="file" name="quarter" id="qurter"><br>
+        <input type="file" name="uploadImage" id="uploadImage" accept="image"><br>
     </form>
     <button type="submit">Upload</button>
 </body>

@@ -17,9 +17,15 @@
     "url": "https://gitlab.com/ubb-webprog/labs2022/lab-zdim1981/issues"
   },
   "homepage": "https://gitlab.com/ubb-webprog/labs2022/lab-zdim1981#readme",
+  "type": "module",
   "devDependencies": {
     "eslint": "^8.13.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "express": "^4.17.3",
+    "express-formidable": "^1.2.0"
   }
 }
