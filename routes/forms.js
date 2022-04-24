@@ -2,9 +2,9 @@ import { Router } from 'express';
 
 const router = Router();
 
-const name = /^[A-Z][a-z]+/g;
-const number = /[0-9]+/g;
-const date = /[0-9]{4}-[0-9]{2}-[0-9]{2}/g;
+const name = /^[A-Z][a-z]+$/;
+const number = /[0-9]+$/;
+const date = /[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
 
 router.post('/searchApartment', (req, resp) => {
   let message = '';
@@ -19,6 +19,9 @@ router.post('/searchApartment', (req, resp) => {
   }
   if (!number.test(req.body.searchMaxPrice)) {
     message += 'Invalid maximum price! <br>';
+  }
+  if (message === '') {
+    message = 'Valid Data!';
   }
   resp.send(message);
 });
@@ -44,16 +47,10 @@ router.post('/uploadApartment', (req, resp) => {
   if (!date.test(req.body.uploadDate)) {
     message += 'Invalid date! <br>';
   }
-  resp.send(message);
-});
-
-router.post('/uploadApartment', (req, resp) => {
-  const file = req.files.uploadImage;
-  let msg = '';
-  if (!(file && file.type.split('/')[0] === 'image')) {
-    msg += 'File is not image!';
+  if (message === '') {
+    message = 'Valid Data!';
   }
-  resp.send(msg);
+  resp.send(message);
 });
 
 export default router;
