@@ -5,7 +5,9 @@ import form from './routes/forms.js';
 import files from './routes/files.js';
 
 const app = express();
+
 const staticDir = path.join(process.cwd(), 'static');
+
 const PORT = process.env.PORT || 8080;
 
 app.use(express.static(staticDir));

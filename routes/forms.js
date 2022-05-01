@@ -1,12 +1,18 @@
 import { Router } from 'express';
+// import { apartments, id } from '../index.js';
 
 const router = Router();
 
-const name = /^[A-Z][a-z]+$/;
-const number = /[0-9]+$/;
-const date = /[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+// eslint-disable-next-line import/no-mutable-exports
+const apartments = [];
+// eslint-disable-next-line import/no-mutable-exports
+let id = 0;
 
-router.post('/searchApartment', (req, resp) => {
+const name = /^$|^[A-Z][a-z]+$/;
+const number = /^$|[0-9]+$/;
+const date = /^$|[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+
+function validateRegex(req) {
   let message = '';
   if (!name.test(req.body.searchCity)) {
     message += 'Invalid City! <br>';
@@ -20,10 +26,36 @@ router.post('/searchApartment', (req, resp) => {
   if (!number.test(req.body.searchMaxPrice)) {
     message += 'Invalid maximum price! <br>';
   }
+  return message;
+}
+
+router.post('/searchApartment', (req, resp) => {
+  const message = validateRegex(req);
   if (message === '') {
-    message = 'Valid Data!';
+    console.log(req.body);
+    let filtered = [];
+    if (req.body.searchCity !== '') {
+      filtered = apartments.filter((ap) => ap.city === req.body.searchCity);
+    } else {
+      filtered = apartments;
+    }
+    if (req.body.searchQuarter !== '') {
+      filtered = filtered.filter((ap) => ap.quarter === req.body.searchQuarter);
+    }
+    if (req.body.searchMinPrice !== '') {
+      filtered = filtered.filter(
+        (ap) => parseInt(ap.price, 10) >= parseInt(req.body.searchMinPrice, 10),
+      );
+    }
+    if (req.body.searchMaxPrice !== '') {
+      filtered = filtered.filter(
+        (ap) => parseInt(ap.price, 10) <= parseInt(req.body.searchMaxPrice, 10),
+      );
+    }
+    resp.send(filtered);
+  } else {
+    resp.send(message);
   }
-  resp.send(message);
 });
 
 router.post('/uploadApartment', (req, resp) => {
@@ -48,7 +80,16 @@ router.post('/uploadApartment', (req, resp) => {
     message += 'Invalid date! <br>';
   }
   if (message === '') {
-    message = 'Valid Data!';
+    const newAp = {};
+    newAp.city = req.body.uploadCity;
+    newAp.quarter = req.body.uploadQuarter;
+    newAp.areea = req.body.uploadArea;
+    newAp.price = req.body.uploadPrice;
+    newAp.rooms = req.body.rooms;
+    newAp.date = req.body.uploadDate;
+    apartments.push(newAp);
+    message = `id: ${id}`;
+    id += 1;
   }
   resp.send(message);
 });
