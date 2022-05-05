@@ -2,10 +2,12 @@ import express, { Router } from 'express';
 import eformidable from 'express-formidable';
 import path from 'path';
 import fs from 'fs';
+import { createPicture } from '../database/pictures.js';
+import { getAnnouncementPictureCount, updateAnnouncementPictureCount } from '../database/announcement.js';
 
 const router = Router();
 
-const imagesDir = path.join(process.cwd(), 'images');
+const imagesDir = path.join(process.cwd(), '/static/images');
 
 if (!fs.existsSync(imagesDir)) {
   fs.mkdirSync(imagesDir);
@@ -15,23 +17,29 @@ router.use(express.static(path.join(process.cwd(), 'static')));
 
 router.use(eformidable({ imagesDir }));
 
-router.post('/uploadImage', (req, resp) => {
+router.post('/uploadImage/:id', async (req, resp) => {
   const file = req.files.uploadImage;
-  const id = req.fields.apartmentID;
-  let message = '';
+  const { id } = req.params;
   if (!(file && file.type.split('/')[0] === 'image')) {
-    message = 'Invalid type';
+    const err = 'Invalid file!';
+    resp.render('error', { err });
   } else {
-    fs.copyFile(file.path, `${imagesDir}\\apartment${id}.jpg`, (err) => {
-      if (err) {
-        message += err;
-      }
-    });
+    try {
+      const picCount = await getAnnouncementPictureCount(id);
+      const newPath = `${imagesDir}\\apartment_${id}_${picCount[0].picture_count}.jpg`;
+      console.log(newPath);
+      fs.copyFile(file.path, newPath, (err) => {
+        if (err) {
+          resp.render('error', { err });
+        }
+      });
+      await createPicture(newPath, id);
+      await updateAnnouncementPictureCount(id);
+      resp.redirect(`/announcement/${id}`);
+    } catch (err) {
+      resp.render('error', { err });
+    }
   }
-  if (message === '') {
-    message = `Valid Data! Path on server: ${imagesDir}\\apartment${id}.jpg`;
-  }
-  resp.send(message);
 });
 
 export default router;
