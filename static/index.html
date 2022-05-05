@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Apartment</title>
+</head>
+
+<body>
+    <form action="/form/searchApartment" method="POST">
+        <label for="searchCity">City</label><br>
+        <input type="text" name="searchCity" id="searchCity" pattern="^[A-Z][a-z]+"><br>
+        <label for="searchQuarter">Quarter</label><br>
+        <input type="text" name="searchQuarter" id="searchQuarter" pattern="^[A-Z][a-z]+"><br>
+        <label for="price">Price</label><br>
+        <input type="number" name="searchMinPrice" id="searchMinPrice" pattern="[0-9]+"> -
+        <input type="number" name="searchMaxPrice" id="searchMaxPrice" pattern="[0-9]+"><br>
+        <button type="submit">Search</button>
+    </form>
+
+    <a href="./upload.html">new apartment</a>
+    <a href="./imageUpload.html">upload image</a>
+</body>
+
+</html>
