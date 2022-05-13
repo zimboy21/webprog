@@ -56,3 +56,8 @@ export const updateAnnouncementPictureCount = async (id) => {
   const query = 'update announcement set picture_count = picture_count + 1 where announcement_id = ?';
   return qp(query, [id]);
 };
+
+export const getExtraData = async (id) => {
+  const query = 'select announcement_area, announcement_date, announcement_room_number from announcement where announcement_id = 1';
+  return qp(query, [id]);
+};

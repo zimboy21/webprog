@@ -33,7 +33,8 @@ router.post('/uploadImage/:id', async (req, resp) => {
           resp.render('error', { err });
         }
       });
-      await createPicture(newPath, id);
+      const pictureName = `apartment_${id}_${picCount[0].picture_count}.jpg`;
+      await createPicture(pictureName, id);
       await updateAnnouncementPictureCount(id);
       resp.redirect(`/announcement/${id}`);
     } catch (err) {

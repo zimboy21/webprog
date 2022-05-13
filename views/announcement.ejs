@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/index.css">
+  <script src="/static.js"></script>
   <title>Announcement deatils</title>
 </head>
 
@@ -20,8 +21,11 @@
   </div>
   <h2>Pictures</h2>
   <% pictures.forEach((pic) => { %>
-  <div>
-    <img src="<%= pic.picture_path %>" alt="<%= pic.picture_id %>" width="150" height="150">
+  <div id="picture_<%= pic.picture_id %>">
+    <div id="errdiv_picture_<%= pic.picture_id %>"></div>
+    <img src="http://localhost:8080/images/<%= pic.picture_path %>" alt="<%= pic.picture_id %>" width="150"
+      height="150">
+    <button onclick="deletePicture('<%= pic.picture_id %>')">x</button>
   </div>
   <% }); %>
   </div>

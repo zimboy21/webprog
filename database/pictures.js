@@ -17,3 +17,8 @@ export const getAnnouncementPicture = async (id) => {
   const query = 'select * from picture where announcement_id = ?';
   return qp(query, [id]);
 };
+
+export const deletePicture = async (id) => {
+  const query = 'delete from picture where picture_id = ?';
+  return qp(query, [id]);
+};

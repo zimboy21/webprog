@@ -7,6 +7,7 @@ import homePage from './routes/home.js';
 import newAnnouncement from './routes/newAnnouncement.js';
 import filterAnnouncement from './routes/filter.js';
 import announcement from './routes/announcement.js';
+import api from './routes/api.js';
 
 import { newAnnouncementFormCheck, searchFormCheck  } from './middlewares/formValidation.js';
 
@@ -27,6 +28,7 @@ app.use('/announcement', announcement);
 app.use('/newAnnouncement', newAnnouncement);
 app.use('/newAnnouncement', newAnnouncementFormCheck, newAnnouncement);
 app.use('/filterAnnouncement', searchFormCheck, filterAnnouncement);
+app.use('/api', api);
 
 app.listen(PORT, () => {
   console.log(`Server listening on PORT: ${PORT}`);
