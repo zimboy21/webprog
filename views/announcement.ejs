@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/index.css">
+  <title>Announcement deatils</title>
+</head>
+
+<body>
+  <div>
+    <h3>
+      <%= announcement.announcement_id %>. In: <%= announcement.announcement_city %>,
+      <%= announcement.announcement_quarter %>
+    </h3>
+    <p>Area: <%= announcement.announcement_area %> m2, Price: <%= announcement.announcement_price %>,
+      Rooms: <%= announcement.announcement_room_number %></p>
+  </div>
+  <h2>Pictures</h2>
+  <% pictures.forEach((pic) => { %>
+  <div>
+    <img src="<%= pic.picture_path %>" alt="<%= pic.picture_id %>" width="150" height="150">
+  </div>
+  <% }); %>
+  </div>
+  <form action="/files/uploadImage/<%= announcement.announcement_id %>" method="POST" enctype="multipart/form-data">
+    <input type="file" name="uploadImage" id="uploadImage" accept="image/*"><br>
+    <button type="submit">Upload</button>
+  </form>
+
+</body>
+
+</html>
