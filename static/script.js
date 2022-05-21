@@ -18,9 +18,9 @@ const showExtraData = async (id) => {
 };
 
 const deletePicture = async (id) => {
-  console.log('bent');
   await fetch(`/api/picture/${id}`, { method: 'DELETE' })
     .then(() => {
+      document.getElementById('announcementRespDiv').innerText = 'Image deleted succesfully!';
       document.getElementById(`picture_${id}`).remove();
     })
     .catch((error) => {

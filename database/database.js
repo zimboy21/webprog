@@ -9,7 +9,7 @@ export const pool = mysql.createPool({
   connectionLimit: 10,
 });
 
-export const createDataBase = async () => {
+export const createAnnouncementTable = async () => {
   pool.query(`create table if not exists announcement (
     announcement_id int auto_increment primary key,
     user_id int,
@@ -29,7 +29,9 @@ export const createDataBase = async () => {
       console.log('Table created successfully: announcement!');
     }
   });
+};
 
+export const createUserTable = async () => {
   pool.query(`create table if not exists user (
     user_id int auto_increment primary key,
     user_name varchar(64),
@@ -42,7 +44,9 @@ export const createDataBase = async () => {
       console.log('Table created successfully: user!');
     }
   });
+};
 
+export const createPictureTable = async () => {
   pool.query(`create table if not exists picture (
     picture_id int auto_increment primary key,
     picture_path varchar(512),
@@ -58,4 +62,6 @@ export const createDataBase = async () => {
   });
 };
 
-createDataBase();
+createUserTable();
+createAnnouncementTable();
+createPictureTable();

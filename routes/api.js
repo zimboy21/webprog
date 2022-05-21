@@ -15,7 +15,7 @@ router.get('/announcement/:id', async (req, resp) => {
       resp.end();
     }
   } catch (error) {
-    resp.status(405);
+    resp.status(500);
     resp.end();
   }
 });
