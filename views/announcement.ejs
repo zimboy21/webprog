@@ -11,8 +11,8 @@
 </head>
 
 <body>
+  <%- include('authPartial.ejs') %>
   <div id="announcementRespDiv"></div>
-
   <div>
     <h3>
       <%= announcement.announcement_id %>. In: <%= announcement.announcement_city %>,
@@ -27,14 +27,18 @@
     <div id="errdiv_picture_<%= pic.picture_id %>"></div>
     <img src="http://localhost:8080/images/<%= pic.picture_path %>" alt="<%= pic.picture_id %>" width="150"
       height="150">
+    <% if (payload.uid === announcement.user_id) { %>
     <button onclick="deletePicture('<%= pic.picture_id %>')">x</button>
+    <% } %>
   </div>
   <% }); %>
   </div>
+  <% if (payload.uid === announcement.user_id) { %>
   <form action="/files/uploadImage/<%= announcement.announcement_id %>" method="POST" enctype="multipart/form-data">
     <input type="file" name="uploadImage" id="uploadImage" accept="image/*"><br>
     <button type="submit">Upload</button>
   </form>
+  <% } %>
 
 </body>
 

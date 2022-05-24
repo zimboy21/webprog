@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <%- include('authPartial.ejs') %>
     <form action="/newAnnouncement" method="POST">
         <label for="uploadCity">City</label><br>
         <input type="text" name="uploadCity" id="uploadCity" pattern="^[A-Z][a-z]+"><br>

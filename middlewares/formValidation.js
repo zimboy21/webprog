@@ -4,6 +4,7 @@ const name = /^$|^[A-Z][a-z]+$/;
 const number = /^$|[0-9]+$/;
 const quarter = /^$|[A-Za-z0-9-.]+$/;
 const date = /^$|[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
+const mail = /^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]{2,4})*$/;
 
 function testRegex(req) {
   let error = '';
@@ -72,5 +73,20 @@ export async function newAnnouncementFormCheck(req, res, next) {
     next();
   } else {
     res.render('apartmentUpload', { error });
+  }
+}
+
+export function registrationFormCheck(req, res, next) {
+  let err = '';
+  if (!name.test(req.body.registerName)) {
+    err += 'Invalid Name!\n';
+  }
+  if (!mail.test(req.body.registerMail)) {
+    err += 'Invalid Email!\n';
+  }
+  if (err === '') {
+    next();
+  } else {
+    res.render('error', { err });
   }
 }

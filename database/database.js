@@ -36,7 +36,8 @@ export const createUserTable = async () => {
     user_id int auto_increment primary key,
     user_name varchar(64),
     user_mail varchar(64),
-    user_password varchar(128));`, (error) => {
+    user_privileges varchar(64),
+    user_password varchar(512));`, (error) => {
     if (error) {
       console.error(`Create table error: ${error.message}`);
       process.exit(1);

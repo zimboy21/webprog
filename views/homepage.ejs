@@ -10,19 +10,22 @@
 </head>
 
 <body>
-    <form action="/filterAnnouncement" method="POST">
-        <label for="searchCity">City</label><br>
-        <input type="text" name="searchCity" id="searchCity" pattern="^[A-Z][a-z]+"><br>
-        <label for="searchQuarter">Quarter</label><br>
-        <input type="text" name="searchQuarter" id="searchQuarter" pattern="^[A-Za-z0-9- .]+"><br>
-        <label for="price">Price</label><br>
-        <input type="number" name="searchMinPrice" id="searchMinPrice" pattern="[0-9]+"> -
-        <input type="number" name="searchMaxPrice" id="searchMaxPrice" pattern="[0-9]+"><br>
-        <button type="submit">Search</button>
-    </form>
+    <%- include('authPartial.ejs') %>
+    <div>
+        <form action="/filterAnnouncement" method="POST">
+            <label for="searchCity">City</label><br>
+            <input type="text" name="searchCity" id="searchCity" pattern="^[A-Z][a-z]+"><br>
+            <label for="searchQuarter">Quarter</label><br>
+            <input type="text" name="searchQuarter" id="searchQuarter" pattern="^[A-Za-z0-9- .]+"><br>
+            <label for="price">Price</label><br>
+            <input type="number" name="searchMinPrice" id="searchMinPrice" pattern="[0-9]+"> -
+            <input type="number" name="searchMaxPrice" id="searchMaxPrice" pattern="[0-9]+"><br>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
 
     <a href="/newAnnouncement">new apartment</a>
-    <a href="./imageUpload.html">upload image</a>
 
     <div>
         <p><%= error %></p>
