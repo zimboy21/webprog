@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration</title>
+</head>
+
+<body>
+  <a href="/">
+    <img src="/logo.png" alt="logo.png" width="150" height="150" style="float: left;"><br>
+  </a>
+  <div id="registerForm">
+    <form action="/register" method="POST">
+      <fieldset>
+        <legend>Registration</legend>
+        <label for="registerName">Name:</label><br>
+        <input type="text" id="registerName" name="registerName" required><br>
+        <label for="registerMail">E-mail:</label><br>
+        <input type="text" id="registerMail" name="registerMail" required><br>
+        <label for="registerPassword">Password:</label><br>
+        <input type="password" id="registerPassword" name="registerPassword" required><br>
+      </fieldset>
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+</body>
+
+</html>

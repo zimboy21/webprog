@@ -26,14 +26,14 @@ router.post('/uploadImage/:id', async (req, resp) => {
   } else {
     try {
       const picCount = await getAnnouncementPictureCount(id);
-      const newPath = `${imagesDir}\\apartment_${id}_${picCount[0].picture_count}.jpg`;
-      console.log(newPath);
+      const newPath = path.join(imagesDir, `/apartment_${id}_${picCount[0].picture_count}.jpg`);
       fs.copyFile(file.path, newPath, (err) => {
         if (err) {
           resp.render('error', { err });
         }
       });
-      await createPicture(newPath, id);
+      const pictureName = `apartment_${id}_${picCount[0].picture_count}.jpg`;
+      await createPicture(pictureName, id);
       await updateAnnouncementPictureCount(id);
       resp.redirect(`/announcement/${id}`);
     } catch (err) {

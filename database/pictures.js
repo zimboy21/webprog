@@ -17,3 +17,17 @@ export const getAnnouncementPicture = async (id) => {
   const query = 'select * from picture where announcement_id = ?';
   return qp(query, [id]);
 };
+
+export const deletePicture = async (id) => {
+  const query = 'delete from picture where picture_id = ?';
+  return qp(query, [id]);
+};
+
+export const getPictureOwner = async (id) => {
+  const query = `select a.user_id
+  from announcement as a
+  join picture as p
+  on p.announcement_id = a.announcement_id
+  where p.picture_id = ?`;
+  return qp(query, [id]);
+};

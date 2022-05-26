@@ -8,5 +8,14 @@ drop table picture
 drop table announcement
 drop table user
 
-insert into user(user_name, user_mail, user_password) values('Peter Griffyn', 'pg@mail.com', 'pawwd');
-insert into user(user_name, user_mail, user_password) values('admin', 'padmin@mail.com', 'pass');
+select * from user
+
+select user_password from user where user_mail = 'zimi@mail.com'
+
+delete from user
+
+select a.user_id
+from announcement as a
+join picture as p
+on p.announcement_id = a.announcement_id
+where p.picture_id = 1

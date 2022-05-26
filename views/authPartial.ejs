@@ -1,0 +1,23 @@
+<% if (!payload.userName) { %>
+<div class="log">
+  <a class="home" href="/">
+    <img src="/logo.png" alt="logo.png" width="150" height="150" style="float: left;"><br>
+  </a>
+  <form action="/auth/getLoginForm" method="GET" class="inline">
+    <button type="submit">Login</button>
+  </form>
+  <form action="/auth/getRegisterForm" method="GET" class="inline">
+    <button type="submit">Register</button>
+  </form>
+</div><br>
+<% } else { %>
+<div class="log">
+  <a class="home" href="/">
+    <img src="/logo.png" alt="logo.png" width="150" height="150" style="float: left;"><br>
+  </a>
+  <div class="authenticator">Hello, <%= payload.userName %></div>
+  <form action="/auth/logout" method="POST" class="inline">
+    <button type="submit">Logout</button>
+  </form>
+</div><br>
+<% } %>

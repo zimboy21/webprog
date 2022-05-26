@@ -8,8 +8,7 @@ router.get('/:id', async (req, resp) => {
   try {
     const { id } = req.params;
     const pictures = await getAnnouncementPicture(id);
-    const res = await getAnnouncement(id);
-    const announcement = res[0];
+    const [announcement] = await getAnnouncement(id);
     resp.render('announcement', { announcement, pictures });
   } catch (err) {
     resp.render('error', { err });

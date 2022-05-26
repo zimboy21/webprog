@@ -5,38 +5,46 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/script.js"></script>
     <title>Search Apartment</title>
 </head>
 
 <body>
-    <form action="/filterAnnouncement" method="POST">
-        <label for="searchCity">City</label><br>
-        <input type="text" name="searchCity" id="searchCity" pattern="^[A-Z][a-z]+"><br>
-        <label for="searchQuarter">Quarter</label><br>
-        <input type="text" name="searchQuarter" id="searchQuarter" pattern="^[A-Za-z0-9- .]+"><br>
-        <label for="price">Price</label><br>
-        <input type="number" name="searchMinPrice" id="searchMinPrice" pattern="[0-9]+"> -
-        <input type="number" name="searchMaxPrice" id="searchMaxPrice" pattern="[0-9]+"><br>
-        <button type="submit">Search</button>
-    </form>
+    <%- include('authPartial.ejs') %>
+    <div>
+        <form action="/filterAnnouncement" method="POST">
+            <label for="searchCity">City</label><br>
+            <input type="text" name="searchCity" id="searchCity" pattern="^[A-Z][a-z]+"><br>
+            <label for="searchQuarter">Quarter</label><br>
+            <input type="text" name="searchQuarter" id="searchQuarter" pattern="^[A-Za-z0-9- .]+"><br>
+            <label for="price">Price</label><br>
+            <input type="number" name="searchMinPrice" id="searchMinPrice" pattern="[0-9]+"> -
+            <input type="number" name="searchMaxPrice" id="searchMaxPrice" pattern="[0-9]+"><br>
+            <button type="submit">Search</button>
+        </form>
+    </div>
 
-    <a href="/newAnnouncement">new apartment</a>
-    <a href="./imageUpload.html">upload image</a>
+
+    <form action="/newAnnouncement" method="GET">
+        <button type="submit">New Announcement</button>
+    </form>
 
     <div>
         <p><%= error %></p>
     </div>
     <h2>All announcements</h2>
-        <% announcements.forEach((item) => { %>
-        <div>
-            <h3>
-                <%= item.announcement_id %>. In: <%= item.announcement_city %>, <%= item.announcement_quarter %>
-            </h3>
-            <p>Area: <%= item.announcement_area %> m2, Price: <%= item.announcement_price %>,
-                Rooms: <%= item.announcement_room_number %></p>
-            <a href="/announcement/<%= item.announcement_id %>">more details</a>
-        </div>
-        <% }); %>
+    <% announcements.forEach((item) => { %>
+    <hr>
+    <div>
+        <div id="errdiv_announcement_<%= item.announcement_id %>"></div>
+        <h3 onclick="showExtraData('<%= item.announcement_id %>')"><%= item.announcement_city %>,
+            <%= item.announcement_quarter %></h3>
+        <p>Price: <%= item.announcement_price %></p>
+        <div id="extraData_<%= item.announcement_id %>"></div>
+        <a href="/announcement/<%= item.announcement_id %>">Images</a>
+    </div>
+    <br>
+    <% }); %>
     </div>
 
 </body>
