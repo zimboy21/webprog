@@ -50,29 +50,29 @@ export async function searchFormCheck(req, resp, next) {
 }
 
 export async function newAnnouncementFormCheck(req, res, next) {
-  let error = '';
+  let err = '';
   if (!name.test(req.body.uploadCity)) {
-    error += 'Invalid City! <br>';
+    err += 'Invalid City!';
   }
   if (!name.test(req.body.uploadQuarter)) {
-    error += 'Invalid Quarter! <br>';
+    err += 'Invalid Quarter!';
   }
   if (!number.test(req.body.uploadArea)) {
-    error += 'Invalid area! <br>';
+    err += 'Invalid area!';
   }
   if (!number.test(req.body.uploadPrice)) {
-    error += 'Invalid price! <br>';
+    err += 'Invalid price!';
   }
   if (!number.test(req.body.uploadRomms)) {
-    error += 'Invalid number of rooms! <br>';
+    err += 'Invalid number of rooms!';
   }
   if (!date.test(req.body.uploadDate)) {
-    error += 'Invalid date! <br>';
+    err += 'Invalid date! <br>';
   }
-  if (error === '') {
+  if (err === '') {
     next();
   } else {
-    res.render('apartmentUpload', { error });
+    res.render('error', { err });
   }
 }
 

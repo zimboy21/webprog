@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
 import secret from  '../utils/utils.js';
 import { getUserData, checkExistingUser } from '../database/user.js';
+import { getAnnouncementOwner } from '../database/announcement.js';
+import { getPictureOwner } from '../database/pictures.js';
 
-export async function checkAuthenticatedUser(req, res, next) {
+export async function JWTManagger(req, res, next) {
   res.locals.payload = {};
   try {
     if (req.cookies.cookie) {
@@ -54,6 +56,45 @@ export default async function checkJWT(req, res, next) {
   } else {
     const err = 'Login to access this feature!';
     res.status(401);
+    res.render('error', { err });
+  }
+}
+
+export async function canUploadPicture(req, res, next) {
+  try {
+    const id = req.url.substring(13);
+    const owner = await getAnnouncementOwner(id);
+    if (res.locals.payload.userPrivileges === 'admin' || res.locals.payload.uid === owner[0].user_id) {
+      next();
+    } else {
+      const err = 'Unauthorized for this action!';
+      res.status(401);
+      res.render('error', { err });
+    }
+  } catch (error) {
+    const err = `Something went wrong: ${error}`;
+    res.render('error', { err });
+  }
+}
+
+export async function canDeletePicture(req, res, next) {
+  try {
+    if (req.method === 'DELETE') {
+      const id = req.url.substring(9);
+      const owner = await getPictureOwner(id);
+      if (res.locals.payload.userPrivileges
+    === 'admin' || res.locals.payload.uid === owner[0].user_id) {
+        next();
+      } else {
+        const err = 'Unauthorized for this action!';
+        res.status(401);
+        res.render('error', { err });
+      }
+    } else {
+      next();
+    }
+  } catch (error) {
+    const err = `Something went wrong: ${error}`;
     res.render('error', { err });
   }
 }

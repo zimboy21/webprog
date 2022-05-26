@@ -58,6 +58,11 @@ export const updateAnnouncementPictureCount = async (id) => {
 };
 
 export const getExtraData = async (id) => {
-  const query = 'select announcement_area, announcement_date, announcement_room_number from announcement where announcement_id = 1';
+  const query = 'select announcement_area, announcement_date, announcement_room_number from announcement where announcement_id = ?';
+  return qp(query, [id]);
+};
+
+export const getAnnouncementOwner = (id) => {
+  const query = 'select user_id from announcement where announcement_id = ?';
   return qp(query, [id]);
 };
