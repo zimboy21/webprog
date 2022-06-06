@@ -12,6 +12,7 @@ import api from './routes/api.js';
 import auth from './routes/auth.js';
 import register from './routes/register.js';
 import createAnnouncement from './routes/createAnnouncement.js';
+import account from './routes/account.js';
 
 import { newAnnouncementFormCheck, searchFormCheck, registrationFormCheck  } from './middlewares/formValidation.js';
 import checkJWT, {
@@ -42,6 +43,7 @@ app.use('/filterAnnouncement', searchFormCheck, filterAnnouncement);
 app.use('/auth', auth);
 app.use('/register', canRegister, registrationFormCheck, register);
 app.use('/api', canDeletePicture, api);
+app.use('/account', checkJWT, account);
 
 app.listen(PORT, () => {
   console.log(`Server listening on PORT: ${PORT}`);

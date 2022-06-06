@@ -1,6 +1,6 @@
 import { getAllAnnouncement } from '../database/announcement.js';
 
-const name = /^$|^[A-Z][a-z]+$/;
+const name = /^$|[A-Za-z0-9]+$/;
 const number = /^$|[0-9]+$/;
 const quarter = /^$|[A-Za-z0-9-.]+$/;
 const date = /^$|[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
@@ -78,6 +78,7 @@ export async function newAnnouncementFormCheck(req, res, next) {
 
 export function registrationFormCheck(req, res, next) {
   let err = '';
+  console.log(req.body);
   if (!name.test(req.body.registerName)) {
     err += 'Invalid Name!\n';
   }

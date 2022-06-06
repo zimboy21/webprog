@@ -5,7 +5,9 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/index.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/styles.css">
   <script src="/script.js"></script>
   <title>Announcement deatils</title>
 </head>
@@ -15,24 +17,29 @@
   <div id="announcementRespDiv"></div>
   <div>
     <h3>
-      <%= announcement.announcement_id %>. In: <%= announcement.announcement_city %>,
+      Location: <%= announcement.announcement_city %>,
       <%= announcement.announcement_quarter %>
     </h3>
-    <p>Area: <%= announcement.announcement_area %> m2, Price: <%= announcement.announcement_price %>,
-      Rooms: <%= announcement.announcement_room_number %></p>
+    <p>Area: <%= announcement.announcement_area %> m&#178</p>
+    <p>Price: <%= announcement.announcement_price %>$</p>
+    <p>Rooms: <%= announcement.announcement_room_number %></p>
   </div>
-  <h2>Pictures</h2>
-  <% pictures.forEach((pic) => { %>
-  <div id="picture_<%= pic.picture_id %>">
-    <div id="errdiv_picture_<%= pic.picture_id %>"></div>
-    <img src="http://localhost:8080/images/<%= pic.picture_path %>" alt="<%= pic.picture_id %>" width="150"
-      height="150">
-    <% if (payload.uid === announcement.user_id) { %>
-    <button onclick="deletePicture('<%= pic.picture_id %>')">x</button>
-    <% } %>
+
+  <div class="row">
+    <% pictures.forEach((pic) => { %>
+    <div id="picture_<%= pic.picture_id %>" class="col-md-4">
+      <div id="errdiv_picture_<%= pic.picture_id %>"></div>
+      <div class="thumbnail">
+        <img src="http://localhost:8080/images/<%= pic.picture_path %>" alt="<%= pic.picture_id %>" width="150"
+          height="150">
+        <% if (payload.uid === announcement.user_id || payload.userPrivileges === 'admin') { %>
+        <button onclick="deletePicture('<%= pic.picture_id %>')">x</button>
+        <% } %>
+      </div>
+    </div>
+    <% }); %>
   </div>
-  <% }); %>
-  </div>
+
   <% if (payload.uid === announcement.user_id) { %>
   <form action="/files/uploadImage/<%= announcement.announcement_id %>" method="POST" enctype="multipart/form-data">
     <input type="file" name="uploadImage" id="uploadImage" accept="image/*"><br>

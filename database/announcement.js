@@ -66,3 +66,8 @@ export const getAnnouncementOwner = (id) => {
   const query = 'select user_id from announcement where announcement_id = ?';
   return qp(query, [id]);
 };
+
+export const getMyAnnouncements = async (id) => {
+  const query = 'select * from announcement where user_id = ?';
+  return qp(query, [id]);
+};

@@ -19,3 +19,9 @@ from announcement as a
 join picture as p
 on p.announcement_id = a.announcement_id
 where p.picture_id = 1
+
+select a.announcement_id, a.user_id, a.announcement_city,  a.announcement_quarter, a.announcement_area, a.announcement_price, a.announcement_room_number, a.announcement_date, a.picture_count,limit 1 p.picture_path 
+from announcement as a
+join picture as p
+on p.announcement_id = a.announcement_id
+where a.announcement_id = 6

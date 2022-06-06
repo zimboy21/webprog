@@ -1,23 +1,57 @@
 <% if (!payload.userName) { %>
-<div class="log">
-  <a class="home" href="/">
-    <img src="/logo.png" alt="logo.png" width="150" height="150" style="float: left;"><br>
-  </a>
-  <form action="/auth/getLoginForm" method="GET" class="inline">
-    <button type="submit">Login</button>
-  </form>
-  <form action="/auth/getRegisterForm" method="GET" class="inline">
-    <button type="submit">Register</button>
-  </form>
-</div><br>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" href="/"><img src="/logo.png" width="55" alt="" class="d-inline-block align-middle mr-2">
+      <span class="text-uppercase font-weight-bold">Imobiliare Santai</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+        class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/"><i class="fa fa-home"></i>Home</a>
+        </li>
+      </ul>
+      <form class="d-flex" method="GET" action="/auth/getAuthForm">
+        <button class="btn btn-outline-dark" type="submit">
+          <i class="fa fa-user">Log in</i>
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
 <% } else { %>
-<div class="log">
-  <a class="home" href="/">
-    <img src="/logo.png" alt="logo.png" width="150" height="150" style="float: left;"><br>
-  </a>
-  <div class="authenticator">Hello, <%= payload.userName %></div>
-  <form action="/auth/logout" method="POST" class="inline">
-    <button type="submit">Logout</button>
-  </form>
-</div><br>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container px-4 px-lg-5">
+    <a class="navbar-brand" href="/"><img src="/logo.png" width="55" alt="" class="d-inline-block align-middle mr-2">
+      <span class="text-uppercase font-weight-bold">Imobiliare Santai</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+        class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/"><i class="fa fa-home"></i>Home</a>
+        </li>
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="/users"><i class="fa fa-users"></i>Users</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false"> <i class="fa fa-user">Account</i> </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="/account">Manage Account</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div>
+        <span class="mg-bt-sm mb-lg-0 ms-lg-4">Hello, <%= payload.userName %> </span>
+      </div>
+      <form class="d-flex" method="POST" action="/auth/logout">
+        <button class="btn btn-outline-dark" type="submit">
+          Log out
+        </button>
+      </form>
+    </div>
+  </div>
+</nav>
 <% } %>

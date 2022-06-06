@@ -6,12 +6,8 @@ import { checkUserAuth } from '../database/user.js';
 
 const router = Router();
 
-router.get('/getLoginForm', (req, resp) => {
+router.get('/getAuthForm', (req, resp) => {
   resp.render('login');
-});
-
-router.get('/getRegisterForm', (req, resp) => {
-  resp.render('register');
 });
 
 router.post('/login', async (req, resp) => {
