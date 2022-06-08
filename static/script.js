@@ -115,7 +115,7 @@ function closechangeAvatarForm() {
 }
 
 const sendTextMessage = async (to, from) => {
-  console.log('iyt');
+  console.log('ise');
   const text = document.getElementById('messageTextArea').value;
   const params = {
     to: to,

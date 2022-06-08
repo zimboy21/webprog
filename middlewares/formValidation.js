@@ -2,7 +2,7 @@ import { getAllAnnouncement } from '../database/announcement.js';
 
 const name = /^$|[A-Za-z0-9]+$/;
 const number = /^$|[0-9]+$/;
-const quarter = /^$|[A-Za-z0-9-.]+$/;
+const quarter = /^$|[A-Za-z0-9-. ]+$/;
 const date = /^$|[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
 const mail = /^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]{2,4})*$/;
 

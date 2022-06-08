@@ -172,7 +172,7 @@ export function canChangeUser(req, res, next) {
 
 export function canChat(req, res, next) {
   if (req.method === 'POST') {
-    if (req.body.from === res.locals.payload.uid) {
+    if (req.body.from === res.locals.payload.uid || req.body.to === res.locals.payload.uid) {
       next();
     } else {
       const err = 'Unauthorized for this action!';

@@ -53,11 +53,14 @@
               <span class="slider round"></span>
             </label>
             <strong id="userRightsResp_<%= user.user_id %>"></strong>
-            <a class="btn btn-outline-dark mt-auto" href="#" data-toggle="modal"
+            <% if (user.user_id !== payload.uid) { %>
+            <a class="btn btn-outline-dark mt-auto" href="/chat/<%= user.user_id %>" data-toggle="modal"
               data-target="#modal-contact">Contact</a>
+            <%}%>
             <button onclick="deleteUser('<%= user.user_id %>')" class="btn btn-outline-dark mt-auto">Delete</button>
           </div>
         </footer>
+
       </div>
       <% }); %>
     </div>
