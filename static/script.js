@@ -31,6 +31,17 @@ const deletePicture = async (id) => {
 const deleteAnnouncement = async (id) => {
   await fetch(`api/announcement/${id}`, { method: 'DELETE' })
   .then(() => {
+    document.getElementById('nnouncementResponses').innerText = 'Announcement deleted succesfully!';
+    document.getElementById(`announcementCard_${id}`).remove();
+  })
+  .catch((error) => {
+    document.getElementById(`announcementCard_`).innerText = error;
+  });
+}
+
+const deleteMyAnnouncement = async (id) => {
+  await fetch(`api/announcement/${id}`, { method: 'DELETE' })
+  .then(() => {
     document.getElementById('myAnnouncementResponses').innerText = 'Announcement deleted succesfully!';
     document.getElementById(`myAnnouncementCard_${id}`).remove();
   })
@@ -104,12 +115,14 @@ function closechangeAvatarForm() {
 }
 
 const sendTextMessage = async (to, from) => {
+  console.log('iyt');
   const text = document.getElementById('messageTextArea').value;
   const params = {
     to: to,
     from: from,
     text: text,
   };
+  console.log(params);
   await fetch(`chat/sendMessage`, {
     method: 'POST',
     headers: {

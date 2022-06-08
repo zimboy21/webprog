@@ -18,7 +18,6 @@ router.get('/:id', async (req, resp) => {
 router.post('/:id', async (req, resp) => {
   try {
     const { id } = req.params;
-    console.log(req.body);
     await updateAnnouncement(
       req.body.updateCity,
       req.body.updateQuarter,

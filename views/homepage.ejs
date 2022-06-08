@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/script.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous">
+    </script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/styles.css">
@@ -19,68 +24,62 @@
 
 <body>
     <%- include('authPartial.ejs') %>
-    <header class="bg-green py-5">
-        <div class="container px-4 px-lg-5 my-5">
-            <div class="text-center text-white">
-                <h1 class="display-4 fw-bolder">Announcements</h1>
-                <p><%= error %></p>
-                <p id="announcementResponses"></p>
-            </div>
-        </div>
-    </header>
 
-    <div class="form-box">
-        <div class="form-top">
-            <div class="form-top-left">
+    <h1 class="display-4">Announcements</h1>
+    <p><%= error %></p>
+    <p id="announcementResponses"></p>
+
+    <div>
+        <div>
+            <div>
                 <h3>Filter announcements</h3>
             </div>
         </div>
-        <div class="form-bottom">
+        <div>
             <form role="form" action="/filterAnnouncement" method="POST">
-                <div class="form-group">
+                <div>
                     <label for="searchCity">City</label><br>
                     <input placeholder="City..." type="text" name="searchCity" id="searchCity"
                         pattern="^[A-Z][a-z]+"><br>
                 </div>
-                <div class="form-group">
+                <div>
                     <label for="searchQuarter">Quarter</label><br>
                     <input placeholder="Quarter..." type="text" name="searchQuarter" id="searchQuarter"
                         pattern="^[A-Za-z0-9- .]+"><br>
                 </div>
-                <div class="form-group">
+                <div">
                     <label for="price">Price</label><br>
                     <input placeholder="Minimum price..." type="number" name="searchMinPrice" id="searchMinPrice"
                         pattern="[0-9]+">
                     <input placeholder="Maximum price..." type="number" name="searchMaxPrice" id="searchMaxPrice"
                         pattern="[0-9]+"><br>
-                </div>
-                <br>
-                <button type="submit" class="btn btn-outline-dark">Search</button>
-            </form>
         </div>
+        <br>
+        <button type="submit" class="btn btn-outline-dark">Search</button>
+        </form>
+    </div>
     </div>
 
-    <section class="py-5"></section>
-    <div class="container px-4 px-lg-5 mt-5">
+    <div class="container">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <% announcements.forEach((item) => { %>
-            <div id="announcementCard_<%= item.announcement_id %>" class="col mb-5">
+            <div id="announcementCard_<%= item.announcement_id %>">
                 <div class="card h-100">
                     <object class="card-img-top"
                         data="http://localhost:8080/images/apartment_<%= item.announcement_id %>_0.jpg"
                         type="image/png">
                         <img class="card-img-top" src="http://localhost:8080/404.jpg" alt=" ..." />
                     </object>
-                    <div class="card-body p-4">
+                    <div class="card-body">
                         <div class="text-center">
                             <div id="errdiv_announcement_<%= item.announcement_id %>"></div>
-                            <h5 class="fw-bolder" onclick="showExtraData('<%= item.announcement_id %>')">
+                            <h5 onclick="showExtraData('<%= item.announcement_id %>')">
                                 <%= item.announcement_city %>, <%= item.announcement_quarter %></h5>
                             $<%= item.announcement_price %>
                         </div>
                         <div id="extraData_<%= item.announcement_id %>"></div>
                     </div>
-                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="card-footer">
                         <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                                 href="/announcement/<%= item.announcement_id %>">View</a></div>
                         <% if (payload.userPrivileges === 'admin') { %>

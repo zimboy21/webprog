@@ -5,7 +5,6 @@ const router = Router();
 
 router.post('/updateUserProfile/:id', async (req, resp) => {
   try {
-    console.log(req.url);
     await updateUserProfile(
       req.body.firstName,
       req.body.lastName,

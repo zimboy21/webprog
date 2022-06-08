@@ -5,7 +5,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="/script.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/styles.css">
@@ -14,6 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
     integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous">
   </script>
+  <script src="/script.js"></script>
   <title>Chat</title>
 </head>
 
@@ -22,20 +22,18 @@
   <br>
   <br>
   <br>
-  <div class="container">
-    <div class="col-md-12">
-      <div class="card b-1 hover-shadow mb-20">
-        <div class="media card-body">
-          <div class="media-left pr-12">
-            <img class="avatar avatar-xl no-radius"
-              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-              alt="...">
+  <div>
+    <div>
+      <div>
+        <div>
+          <div>
+            <img src="http://localhost:8080/avatars/avatar.jpg" alt="...">
           </div>
-          <div class="media-body">
-            <div class="mb-2">
-              <span class="fs-20 pr-16"><%= user.user_name %></span>
+          <div>
+            <div>
+              <span><%= user.user_name %></span>
             </div>
-            <small class="fs-16 fw-300 ls-1"><%= user.user_mail %></small>
+            <small><%= user.user_mail %></small>
           </div>
         </div>
         <footer class="card-footer flexbox align-items-center">
@@ -48,15 +46,15 @@
       <div class="container overflow-scroll">
         <% chat.forEach((text) => { %>
         <% if (text.from_id === payload.uid) { %>
-        <div class="card b-1 mb-20 fromMe">
-          <div class="media-body">
-            <div id="" class="mb-2 right"><%= text.chat_text %></div>
+        <div class="card fromMe">
+          <div>
+            <div id="" class="right"><%= text.chat_text %></div>
           </div>
         </div>
         <% } else { %>
-        <div class="card b-1 hover-shadow mb-20 toMe">
-          <div class="media-body">
-            <div class="mb-2 left"><%= text.chat_text %></div>
+        <div class="card toMe">
+          <div>
+            <div class="left"><%= text.chat_text %></div>
           </div>
         </div>
         <% } %>
@@ -66,9 +64,8 @@
         <label for="messageTextArea">Send a message:</label>
         <textarea class="form-control" id="messageTextArea" rows="3"></textarea>
       </div>
-      <button onclick="sendTextMessage('<%= user.user_id %>', '<%= payload.uid %>')"
-        class="btn btn-outline-dark mt-auto">Send</button>
-
+      <a onclick="sendTextMessage('<%= user.user_mail %>','<%= payload.uid %>')"
+        class="btn btn-outline-dark mt-auto">Send</a>
     </div>
   </div>
   </div>

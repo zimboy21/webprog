@@ -78,7 +78,6 @@ export async function newAnnouncementFormCheck(req, res, next) {
 
 export function registrationFormCheck(req, res, next) {
   let err = '';
-  console.log(req.body);
   if (!name.test(req.body.registerName)) {
     err += 'Invalid Name!\n';
   }

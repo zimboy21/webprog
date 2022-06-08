@@ -19,34 +19,25 @@
 
 <body>
   <%- include('authPartial.ejs') %>
-  <header class="bg-green py-5">
-    <div class="container px-4 px-lg-5 my-5">
-      <div class="text-center text-white">
-        <h1 class="display-4 fw-bolder">Your Announcements</h1>
-        <p id="myAnnouncementResponses"></p>
-      </div>
-    </div>
-  </header>
-  <section class="py-5"></section>
-  <div class="container px-4 px-lg-5 mt-5">
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+  <div class="container">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
       <% myAnnouncements.forEach((item) => { %>
-      <div id="myAnnouncementCard_<%= item.announcement_id %>" class="col mb-5">
+      <div id="myAnnouncementCard_<%= item.announcement_id %>" class="col">
         <div class="card h-100">
           <object class="card-img-top" data="http://localhost:8080/images/apartment_<%= item.announcement_id %>_0.jpg"
             type="image/png">
             <img class="card-img-top" src="http://localhost:8080/404.jpg" alt=" ..." />
           </object>
-          <div class="card-body p-4">
+          <div class="card-body">
             <div class="text-center">
               <div id="errdiv_announcement_<%= item.announcement_id %>"></div>
-              <h5 class="fw-bolder" onclick="showExtraData('<%= item.announcement_id %>')">
+              <h5 onclick="showExtraData('<%= item.announcement_id %>')">
                 <%= item.announcement_city %>, <%= item.announcement_quarter %></h5>
               $<%= item.announcement_price %>
             </div>
             <div id="extraData_<%= item.announcement_id %>"></div>
           </div>
-          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+          <div class="card-footer">
             <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                 href="/announcement/<%= item.announcement_id %>">View</a></div>
             <div class="text-center"><button class="btn btn-outline-dark mt-auto"
@@ -76,7 +67,7 @@
               </form>
             </div>
             <div class="text-center"><button class="btn btn-outline-dark mt-auto"
-                onclick="deleteAnnouncement('<%= item.announcement_id %>')">Delete</button></div>
+                onclick="deleteMyAnnouncement('<%= item.announcement_id %>')">Delete</button></div>
           </div>
         </div>
       </div>

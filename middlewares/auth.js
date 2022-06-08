@@ -75,7 +75,6 @@ export async function canUploadPicture(req, res, next) {
     } else if (req.url.startsWith('/uploadAvatar')) {
       const id = req.url.substring(14);
       if (res.locals.payload.uid.toString() === id.toString()) {
-        console.log(req.url);
         next();
       } else {
         const err = 'Unauthorized for this action!';
@@ -159,7 +158,6 @@ export function canChangeUser(req, res, next) {
     }
   } else if (req.url.startsWith('/updateUserProfile')) {
     const id = req.url.substring(19);
-    console.log(id);
     if (id.toString() === res.locals.payload.uid.toString()) {
       next();
     } else {

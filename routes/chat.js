@@ -14,7 +14,6 @@ router.post('/chat/sendMessage', async (req, resp) => {
 
 router.get('/:id', async (req, resp) => {
   try {
-    console.log(resp.locals.payload.uid, req.params.id);
     const chat = await getChat(resp.locals.payload.uid, req.params.id);
     const acc = await getMyAccount(req.params.id);
     const user = acc[0];

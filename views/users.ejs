@@ -26,18 +26,16 @@
   <div class="container">
     <div class="col-md-12">
       <% users.forEach((user) => { %>
-      <div id="userCard_<%= user.user_id %>" class="card b-1 hover-shadow mb-20">
+      <div id="userCard_<%= user.user_id %>" class="card">
         <div class="media card-body">
-          <div class="media-left pr-12">
-            <img class="avatar avatar-xl no-radius"
-              src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-              alt="...">
+          <div>
+            <img class="avatar avatar-xl no-radius" src="http://localhost:8080/avatars/avatar.jpg" alt="...">
           </div>
           <div class="media-body">
-            <div class="mb-2">
-              <span class="fs-20 pr-16"><%= user.user_name %></span>
+            <div>
+              <span><%= user.user_name %></span>
             </div>
-            <small class="fs-16 fw-300 ls-1"><%= user.user_mail %></small>
+            <small><%= user.user_mail %></small>
           </div>
         </div>
         <footer class="card-footer flexbox align-items-center">
