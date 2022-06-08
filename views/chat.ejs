@@ -22,52 +22,50 @@
   <br>
   <br>
   <br>
+
   <div>
     <div>
       <div>
+        <img src="http://localhost:8080/avatars/avatar.jpg" alt="..." width="300" height="170">
+      </div>
+      <div>
         <div>
-          <div>
-            <img src="http://localhost:8080/avatars/avatar.jpg" alt="...">
-          </div>
-          <div>
-            <div>
-              <span><%= user.user_name %></span>
-            </div>
-            <small><%= user.user_mail %></small>
-          </div>
+          <span><%= user.user_name %></span>
         </div>
-        <footer class="card-footer flexbox align-items-center">
-          <div>
-            <strong>Phone:</strong>
-            <span><%= user.user_phone %></span>
-        </footer>
+        <small><%= user.user_mail %></small>
       </div>
-      <div id="chatError"></div>
-      <div class="container overflow-scroll">
-        <% chat.forEach((text) => { %>
-        <% if (text.from_id === payload.uid) { %>
-        <div class="card fromMe">
-          <div>
-            <div id="" class="right"><%= text.chat_text %></div>
-          </div>
-        </div>
-        <% } else { %>
-        <div class="card toMe">
-          <div>
-            <div class="left"><%= text.chat_text %></div>
-          </div>
-        </div>
-        <% } %>
-        <% }); %>
-      </div>
-      <div class="form-group">
-        <label for="messageTextArea">Send a message:</label>
-        <textarea class="form-control" id="messageTextArea" rows="3"></textarea>
-      </div>
-      <a onclick="sendTextMessage('<%= user.user_mail %>','<%= payload.uid %>')"
-        class="btn btn-outline-dark mt-auto">Send</a>
     </div>
+    <footer class="card-footer flexbox align-items-center">
+      <div>
+        <strong>Phone:</strong>
+        <span><%= user.user_phone %></span>
+    </footer>
   </div>
+  <div id="chatError"></div>
+  <div class="container overflow-scroll">
+    <% chat.forEach((text) => { %>
+    <% if (text.from_id === payload.uid) { %>
+    <div class="card fromMe">
+      <div>
+        <div id="" class="right"><%= text.chat_text %></div>
+      </div>
+    </div>
+    <% } else { %>
+    <div class="card toMe">
+      <div>
+        <div class="left"><%= text.chat_text %></div>
+      </div>
+    </div>
+    <% } %>
+    <% }); %>
+  </div>
+  <div class="form-group">
+    <label for="messageTextArea">Send a message:</label>
+    <textarea class="form-control" id="messageTextArea" rows="3"></textarea>
+  </div>
+  <a onclick="sendTextMessage('<%= user.user_mail %>','<%= payload.uid %>')"
+    class="btn btn-outline-dark mt-auto">Send</a>
+
   </div>
 </body>
 
