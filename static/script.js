@@ -27,3 +27,98 @@ const deletePicture = async (id) => {
       document.getElementById(`errdiv_picture_${id}`).innerText = error;
     });
 };
+
+const deleteAnnouncement = async (id) => {
+  await fetch(`api/announcement/${id}`, { method: 'DELETE' })
+  .then(() => {
+    document.getElementById('myAnnouncementResponses').innerText = 'Announcement deleted succesfully!';
+    document.getElementById(`myAnnouncementCard_${id}`).remove();
+  })
+  .catch((error) => {
+    document.getElementById(`myAnnouncementResponses`).innerText = error;
+  });
+}
+
+function openForm(id) {
+  document.getElementById(`myForm_${id}`).style.display = 'block';
+  document.getElementById(`openFormButton_${id}`).style.display = 'none';
+}
+
+function closeForm(id) {
+  document.getElementById(`myForm_${id}`).style.display = 'none';
+  document.getElementById(`openFormButton_${id}`).style.display = 'inline';
+}
+
+const setUserRights = async (uid) => {
+  const checkBox = document.getElementById(`checkboxUserRights_${uid}`);
+  const userRights = document.getElementById(`userRights_${uid}`);
+
+  let param = '';
+  if (userRights.innerText === 'admin') {
+    param = 'user';
+  } else {
+    param = 'admin'
+  }
+  const params = {
+    id: uid,
+    privileges: param,
+  };
+
+  await fetch(`api/user`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( params )
+  })
+  .then(() => {
+    if (checkBox.checked) {
+      userRights.innerText = 'admin';
+    } else {
+      userRights.innerText = 'user';
+    }
+  })
+  .catch((error) => {
+    document.getElementById(`userRightsResp_${uid}`).innerText = error;
+  });
+  
+} 
+
+const deleteUser = async (id) => {
+  await fetch(`api/user/${id}`, { method: 'DELETE' })
+  .then(() => {
+    document.getElementById(`userCard_${id}`).remove();
+  })
+  .catch((error) => {
+    document.getElementById(`userRightsResp_${id}`).innerText = error;
+  });
+}
+
+function openchangeAvatarForm() {
+  document.getElementById('mychangeAvatarForm').style.display = 'block';
+}
+
+function closechangeAvatarForm() {
+  document.getElementById('mychangeAvatarForm').style.display = 'none';
+}
+
+const sendTextMessage = async (to, from) => {
+  const text = document.getElementById('messageTextArea').value;
+  const params = {
+    to: to,
+    from: from,
+    text: text,
+  };
+  await fetch(`chat/sendMessage`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify( params )
+  })
+  .catch((error) => {
+    document.getElementById(`chatError`).innerText = error;
+  });
+}

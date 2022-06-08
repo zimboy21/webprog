@@ -12,11 +12,24 @@ import api from './routes/api.js';
 import auth from './routes/auth.js';
 import register from './routes/register.js';
 import createAnnouncement from './routes/createAnnouncement.js';
-import account from './routes/account.js';
+import manageAnnouncement from './routes/manageAnnouncement.js';
+import manageAccount from './routes/manageAccount.js';
+import users from './routes/users.js';
+import avatar from './routes/avatar.js';
+import user from './routes/user.js';
+import chat from './routes/chat.js';
+import messages from './routes/messages.js';
 
 import { newAnnouncementFormCheck, searchFormCheck, registrationFormCheck  } from './middlewares/formValidation.js';
 import checkJWT, {
-  JWTManagger, canRegister, canUploadPicture, canDeletePicture,
+  jwtManagger,
+  canRegister,
+  canUploadPicture,
+  canDeletePicture,
+  canChangeAnnouncement,
+  isAdmin,
+  canChangeUser,
+  canChat,
 } from './middlewares/auth.js';
 
 const app = express();
@@ -32,18 +45,24 @@ app.use(bp.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 
-app.use(JWTManagger);
+app.use(jwtManagger);
 
 app.use('/', homePage);
 app.use('/files', canUploadPicture, files);
-app.use('/announcement', announcement);
+app.use('/avatar', canUploadPicture, avatar);
+app.use('/announcement',  canChangeAnnouncement, announcement);
 app.use('/newAnnouncement', checkJWT, newAnnouncement);
 app.use('/createAnnouncement', newAnnouncementFormCheck, checkJWT, createAnnouncement);
 app.use('/filterAnnouncement', searchFormCheck, filterAnnouncement);
 app.use('/auth', auth);
 app.use('/register', canRegister, registrationFormCheck, register);
-app.use('/api', canDeletePicture, api);
-app.use('/account', checkJWT, account);
+app.use('/api', canDeletePicture, canChangeAnnouncement, canChangeUser, api);
+app.use('/myAnnouncements', checkJWT, manageAnnouncement);
+app.use('/manageAccount', checkJWT, manageAccount);
+app.use('/users', isAdmin, users);
+app.use('/user', canChangeUser, user);
+app.use('/chat', checkJWT, canChat, chat);
+app.use('/messages', checkJWT, canChat, messages);
 
 app.listen(PORT, () => {
   console.log(`Server listening on PORT: ${PORT}`);

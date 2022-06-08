@@ -33,13 +33,20 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
         <li class="nav-item"><a class="nav-link active" aria-current="page" href="/"><i class="fa fa-home"></i>Home</a>
         </li>
+        <% if (payload.userPrivileges === 'admin') { %>
         <li class="nav-item"><a class="nav-link" aria-current="page" href="/users"><i class="fa fa-users"></i>Users</a>
         </li>
+        <li class="nav-item"><a class="nav-link" aria-current="page" href="/messages"><i
+              class="fa fa-envelope"></i>Messages</a>
+        </li>
+        <% } %>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown"
             aria-expanded="false"> <i class="fa fa-user">Account</i> </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/account">Manage Account</a></li>
+            <li><a class="dropdown-item" href="/manageAccount">Manage Account</a></li>
+            <li><a class="dropdown-item" href="/myAnnouncements">Manage Announcements</a></li>
+            <li><a class="dropdown-item" href="/newAnnouncement">New Announcement</a></li>
           </ul>
         </li>
       </ul>

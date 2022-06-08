@@ -23,6 +23,7 @@
     <div class="container px-4 px-lg-5 my-5">
       <div class="text-center text-white">
         <h1 class="display-4 fw-bolder">Your Announcements</h1>
+        <p id="myAnnouncementResponses"></p>
       </div>
     </div>
   </header>
@@ -30,7 +31,7 @@
   <div class="container px-4 px-lg-5 mt-5">
     <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
       <% myAnnouncements.forEach((item) => { %>
-      <div class="col mb-5">
+      <div id="myAnnouncementCard_<%= item.announcement_id %>" class="col mb-5">
         <div class="card h-100">
           <object class="card-img-top" data="http://localhost:8080/images/apartment_<%= item.announcement_id %>_0.jpg"
             type="image/png">
@@ -48,10 +49,34 @@
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
             <div class="text-center"><a class="btn btn-outline-dark mt-auto"
                 href="/announcement/<%= item.announcement_id %>">View</a></div>
-            <% if (item.user_id === payload.uid) { %>
+            <div class="text-center"><button class="btn btn-outline-dark mt-auto"
+                id="openFormButton_<%= item.announcement_id %>"
+                onclick="openForm('<%= item.announcement_id %>')">Edit</button>
+            </div>
+            <div class="form-popup" id="myForm_<%= item.announcement_id %>">
+              <form action="/announcement/<%= item.announcement_id %>" method="POST" class="form-container">
+                <label for="updateCity">City</label><br>
+                <input value="<%= item.announcement_city %>" type="text" name="updateCity" id="updateCity"
+                  pattern="^[A-Z][a-z]+"><br>
+                <label for="updateQuarter">Quarter</label><br>
+                <input value="<%= item.announcement_quarter %>" type="text" name="updateQuarter" id="updateQuarter"
+                  pattern="^[A-Za-z0-9-. ]+"><br>
+                <label for="updateArea">Area</label><br>
+                <input value="<%= item.announcement_area %>" type="number" name="updateArea" id="updateArea"
+                  pattern="[0-9]+"><br>
+                <label for="updatePrice">Price</label><br>
+                <input value="<%= item.announcement_price %>" type="number" name="updatePrice" id="updatePrice"
+                  pattern="[0-9]+"><br>
+                <label for="updateRomms">Number of rooms</label><br>
+                <input value="<%= item.announcement_room_number %>" type="number" name="updateRomms" id="updateRomms"
+                  pattern="[0-9]+"><br>
+                <button type="submit" class="btn btn-outline-dark mt-auto">Save</button>
+                <button type="button" class="btn btn-outline-dark mt-auto"
+                  onclick="closeForm('<%= item.announcement_id %>')">Close</button>
+              </form>
+            </div>
             <div class="text-center"><button class="btn btn-outline-dark mt-auto"
                 onclick="deleteAnnouncement('<%= item.announcement_id %>')">Delete</button></div>
-            <% } %>
           </div>
         </div>
       </div>

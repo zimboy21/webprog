@@ -36,6 +36,11 @@ export const createUserTable = async () => {
     user_id int auto_increment primary key,
     user_name varchar(64),
     user_mail varchar(64),
+    user_firstName varchar(64),
+    user_lastName varchar(64),
+    user_phone varchar(64),
+    user_address varchar(64),
+    user_avatar varchar(128),
     user_privileges varchar(64),
     user_password varchar(512));`, (error) => {
     if (error) {
@@ -63,6 +68,25 @@ export const createPictureTable = async () => {
   });
 };
 
+export const createChatTable = async () => {
+  pool.query(`create table if not exists chat (
+    chat_id int auto_increment primary key,
+    chat_text varchar(512),
+    from_id int,
+    to_id int,
+    foreign key (from_id) references user(user_id) on delete cascade,
+    foreign key (to_id) references user(user_id) on delete cascade
+    );`, (error) => {
+    if (error) {
+      console.error(`Create table error: ${error.message}`);
+      process.exit(1);
+    } else {
+      console.log('Table created successfully: chat!');
+    }
+  });
+};
+
 createUserTable();
 createAnnouncementTable();
 createPictureTable();
+createChatTable();

@@ -37,3 +37,33 @@ export const checkExistingUser = async (mail) => {
   const query = 'select 1 from user where user_mail = ?';
   return qp(query, [mail]);
 };
+
+export const updateUserPrivileges = async (prv, id) => {
+  const query = 'update user set user_privileges = ? where user_id = ?';
+  return qp(query, [prv, id]);
+};
+
+export const deleteUser = async (id) => {
+  const query = 'delete from user where user_id = ?';
+  return qp(query, [id]);
+};
+
+export const getMyAccount = async (id) => {
+  const query = 'select * from user where user_id = ?';
+  return qp(query, [id]);
+};
+
+export const uploadAvatar = async (avatar, id) => {
+  const query = 'update user set user_avatar = ? where user_id = ?';
+  return qp(query, [avatar, id]);
+};
+
+export const updateUserProfile = async (fn, ln, phone, address, id) => {
+  const query = `update user
+                set user_firstName = ?,
+                user_lastname = ?,
+                user_phone = ?,
+                user_address = ?
+                where user_id = ?`;
+  return qp(query, [fn, ln, phone, address, id]);
+};

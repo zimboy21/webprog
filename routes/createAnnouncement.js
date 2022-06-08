@@ -12,7 +12,7 @@ router.post('/', async (req, resp) => {
       req.body.uploadPrice,
       req.body.uploadRomms,
       req.body.uploadDate,
-      req.body.uploadUserId,
+      resp.locals.payload.uid,
     );
     resp.redirect('/');
   } catch (err) {

@@ -4,7 +4,7 @@ import { getUserData, checkExistingUser } from '../database/user.js';
 import { getAnnouncementOwner } from '../database/announcement.js';
 import { getPictureOwner } from '../database/pictures.js';
 
-export async function JWTManagger(req, res, next) {
+export async function jwtManagger(req, res, next) {
   res.locals.payload = {};
   try {
     if (req.cookies.cookie) {
@@ -62,14 +62,28 @@ export default async function checkJWT(req, res, next) {
 
 export async function canUploadPicture(req, res, next) {
   try {
-    const id = req.url.substring(13);
-    const owner = await getAnnouncementOwner(id);
-    if (res.locals.payload.userPrivileges === 'admin' || res.locals.payload.uid === owner[0].user_id) {
-      next();
+    if (req.url.startsWith('/uploadImage')) {
+      const id = req.url.substring(13);
+      const owner = await getAnnouncementOwner(id);
+      if (res.locals.payload.userPrivileges === 'admin' || res.locals.payload.uid === owner[0].user_id) {
+        next();
+      } else {
+        const err = 'Unauthorized for this action!';
+        res.status(401);
+        res.render('error', { err });
+      }
+    } else if (req.url.startsWith('/uploadAvatar')) {
+      const id = req.url.substring(14);
+      if (res.locals.payload.uid.toString() === id.toString()) {
+        console.log(req.url);
+        next();
+      } else {
+        const err = 'Unauthorized for this action!';
+        res.status(401);
+        res.render('error', { err });
+      }
     } else {
-      const err = 'Unauthorized for this action!';
-      res.status(401);
-      res.render('error', { err });
+      next();
     }
   } catch (error) {
     const err = `Something went wrong: ${error}`;
@@ -79,7 +93,7 @@ export async function canUploadPicture(req, res, next) {
 
 export async function canDeletePicture(req, res, next) {
   try {
-    if (req.method === 'DELETE') {
+    if (req.url.startsWith('/picture') && req.method === 'DELETE') {
       const id = req.url.substring(9);
       const owner = await getPictureOwner(id);
       if (res.locals.payload.userPrivileges
@@ -96,5 +110,78 @@ export async function canDeletePicture(req, res, next) {
   } catch (error) {
     const err = `Something went wrong: ${error}`;
     res.render('error', { err });
+  }
+}
+
+export async function canChangeAnnouncement(req, res, next) {
+  try {
+    if (req.url.startsWith('/announcement')) {
+      if ((req.method === 'DELETE' || req.method === 'POST')) {
+        const id = req.url.substring(13);
+        const owner = await getAnnouncementOwner(id);
+        if (res.locals.payload.userPrivileges === 'admin' || res.locals.payload.uid === owner[0].user_id) {
+          next();
+        } else {
+          const err = 'Unauthorized for this action!';
+          res.status(401);
+          res.render('error', { err });
+        }
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  } catch (error) {
+    const err = `Something went wrong: ${error}`;
+    res.render('error', { err });
+  }
+}
+
+export function isAdmin(req, res, next) {
+  if (res.locals.payload.userPrivileges === 'admin') {
+    next();
+  } else {
+    const err = 'Unauthorized for this action!';
+    res.status(401);
+    res.render('error', { err });
+  }
+}
+
+export function canChangeUser(req, res, next) {
+  if (req.url.startsWith('/user')) {
+    if (res.locals.payload.userPrivileges === 'admin' && (req.method === 'POST' || req.method === 'DELETE')) {
+      next();
+    } {
+      const err = 'Unauthorized for this action!';
+      res.status(401);
+      res.render('error', { err });
+    }
+  } else if (req.url.startsWith('/updateUserProfile')) {
+    const id = req.url.substring(19);
+    console.log(id);
+    if (id.toString() === res.locals.payload.uid.toString()) {
+      next();
+    } else {
+      const err = 'Unauthorized for this action!';
+      res.status(401);
+      res.render('error', { err });
+    }
+  } else {
+    next();
+  }
+}
+
+export function canChat(req, res, next) {
+  if (req.method === 'POST') {
+    if (req.body.from === res.locals.payload.uid) {
+      next();
+    } else {
+      const err = 'Unauthorized for this action!';
+      res.status(401);
+      res.render('error', { err });
+    }
+  } else {
+    next();
   }
 }

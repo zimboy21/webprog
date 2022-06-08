@@ -71,3 +71,24 @@ export const getMyAnnouncements = async (id) => {
   const query = 'select * from announcement where user_id = ?';
   return qp(query, [id]);
 };
+
+export const selectCities = async () => {
+  const query = 'SELECT DISTINCT announcement_city FROM announcement';
+  return qp(query, []);
+};
+
+export const selectQuarters = async (city) => {
+  const query = 'SELECT DISTINCT announcement_quarter FROM announcement where announcement_city = ?';
+  return qp(query, [city]);
+};
+
+export const updateAnnouncement = async (city, quarter, price, rooms, area, id) => {
+  const query = `update announcement
+                set announcement_city = ?,
+                announcement_quarter = ?,
+                announcement_price = ?,
+                announcement_room_number = ?,
+                announcement_area = ?
+                where announcement_id = ?`;
+  return qp(query, [city, quarter, price, rooms, area, id]);
+};
