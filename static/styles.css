@@ -55,12 +55,6 @@ input:checked + .slider:before {
   font-size: 0.9rem;
 }
 
-.messages-box,
-.chat-box {
-  height: 510px;
-  overflow-y: scroll;
-}
-
 .rounded-lg {
   border-radius: 0.5rem;
 }
@@ -84,19 +78,6 @@ input::placeholder {
 
 .overlow-scroll {
   overflow: scroll;
-}
-
-.open-button {
-  background-color: #555;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  bottom: 23px;
-  right: 28px;
-  width: 280px;
 }
 
 .form-popup {
