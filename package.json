@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/ubb-webprog/labs2022/lab-zdim1981.git"
+    "url": "git+https://github.com/zimboy21/webprog.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/ubb-webprog/labs2022/lab-zdim1981/issues"
+    "url": "https://github.com/zimboy21/webprog/issues"
   },
-  "homepage": "https://gitlab.com/ubb-webprog/labs2022/lab-zdim1981#readme",
+  "homepage": "https://github.com/zimboy21/webprog#readme",
   "type": "module",
   "devDependencies": {
     "eslint": "^8.13.0",
